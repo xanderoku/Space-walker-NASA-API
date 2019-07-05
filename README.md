@@ -1,1 +1,1 @@
-# Базовый скелет приложения на Express
+# NASA API pet project
