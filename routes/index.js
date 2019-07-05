@@ -1,30 +1,39 @@
 const express = require('express');
+const fetch = require('node-fetch');
+
 const router = express.Router();
-const fs = require('fs');
+// const fs = require('fs');
 
 /* GET home page. */
 router.get('/', (req, res) => {
-  res.render('index', { title: 'Express' });
+  // const onIndex = window.location.href;
+  // console.log('onind: ', onIndex);
+  res.render('index', { siteTitle: 'Space' });
 });
 
-router.get('/hello', (req, res) => {
-  res.render('hello', {name: 'world!'});
-})
-
-router.get('/feedback', (req, res) => {
-  console.log(req.query);
-  const options = {
-    name: req.query.name,
-    height: req.query.height
-  }
-  res.render('feedback.hbs', options);
+router.get('/apod', async (req, res) => {
+  const request = await fetch(
+    'https://api.nasa.gov/planetary/apod?api_key=adT6bwE82c36M86vwIUDOEXBNUwJxsFzeP2vuzGo'
+  );
+  const response = await request.json();
+  const { date, explanation, url, hdurl, title } = response;
+  res.render('apod', { date, hdurl, url, title, explanation });
 });
 
-router.post('/feedback', (req,res) => {
-  // res.redirect('/');
-  console.log(req.body);
-  fs.writeFile('db.json', JSON.stringify(req.body));
-  res.json({status: "Success"});
-})
+router.post('/timetravel', async (req, res) => {
+  // console.log('req body date: ', req.body.date);
+  const request = await fetch(
+    `https://api.nasa.gov/planetary/apod?date=${req.body.date}&api_key=adT6bwE82c36M86vwIUDOEXBNUwJxsFzeP2vuzGo`
+  );
+  const response = await request.json();
+  // console.log(response);
+  // const { date, explanation, url, hdurl, title } = response;
+  res.json(response);
+  // res.render('apod', { date, hdurl, url, title, explanation });
+});
+
+router.get('/carousel', (req, res) => {
+  res.render('carousel');
+});
 
 module.exports = router;
