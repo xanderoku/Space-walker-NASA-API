@@ -1,4 +1,5 @@
 // Фреймворк веб-приложений.
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 
@@ -18,6 +19,13 @@ mongoose.connect('mongodb://localhost/NASA', { useNewUrlParser: true });
 app.use(express.urlencoded({ extended: true }));
 // json.
 app.use(express.json());
+
+// Add local variables (api keys)
+app.use((req, res, next) => {
+  app.locals.nasaApi = process.env.NASA_API_KEY;
+  app.locals.mapsApi = process.env.MAPS_API_KEY;
+  next();
+});
 
 // Импорт маршрутов.
 const indexRouter = require('./routes/index');

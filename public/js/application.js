@@ -36,12 +36,10 @@ if (oppi) {
   oppi.addEventListener('click', async e => {
     const randomSol = Math.floor(Math.random() * 4000) + 50;
     const request = await fetch(
-      `https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos?sol=${randomSol}&camera=fhaz&api_key=adT6bwE82c36M86vwIUDOEXBNUwJxsFzeP2vuzGo`
+      `https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos?sol=${randomSol}&camera=fhaz&api_key=${process.env.NASA_API_KEY}`
     );
     const response = await request.json();
-    console.log('RESP: ', response);
     const urlArr = [];
-    // console.log('PHO: ', response.photos);
     // eslint-disable-next-line no-restricted-syntax
     for (const i of response.photos) {
       urlArr.push(i.img_src);

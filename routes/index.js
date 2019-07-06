@@ -8,12 +8,12 @@ const router = express.Router();
 router.get('/', (req, res) => {
   // const onIndex = window.location.href;
   // console.log('onind: ', onIndex);
-  res.render('index', { siteTitle: 'Space' });
+  res.render('index', { siteTitle: 'Space walker' });
 });
 
 router.get('/apod', async (req, res) => {
   const request = await fetch(
-    'https://api.nasa.gov/planetary/apod?api_key=adT6bwE82c36M86vwIUDOEXBNUwJxsFzeP2vuzGo'
+    `https://api.nasa.gov/planetary/apod?api_key=${process.env.NASA_API_KEY}`
   );
   const response = await request.json();
   const { date, explanation, url, hdurl, title } = response;
@@ -23,7 +23,7 @@ router.get('/apod', async (req, res) => {
 router.post('/timetravel', async (req, res) => {
   // console.log('req body date: ', req.body.date);
   const request = await fetch(
-    `https://api.nasa.gov/planetary/apod?date=${req.body.date}&api_key=adT6bwE82c36M86vwIUDOEXBNUwJxsFzeP2vuzGo`
+    `https://api.nasa.gov/planetary/apod?date=${req.body.date}&api_key=${process.env.NASA_API_KEY}`
   );
   const response = await request.json();
   res.json(response);
