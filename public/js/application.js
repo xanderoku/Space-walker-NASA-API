@@ -14,7 +14,7 @@ timeTravel.addEventListener('submit', async e => {
     body: JSON.stringify({ date: e.target.date.value })
   });
   const returned = await response.json();
-  //   console.log('front: ', returned.url);
+
   if (!timeTravelAddedDiv && returned.url !== undefined) {
     if (logoDiv) logoDiv.remove();
     const newDiv = document.createElement('div');
@@ -44,7 +44,7 @@ if (oppi) {
     for (const i of response.photos) {
       urlArr.push(i.img_src);
     }
-    // console.log('URLS: ', urlArr);
+
     if (response.photos.length !== 0) {
       const newDiv = document.createElement('div');
       newDiv.id = 'timetravel-div';

@@ -11,7 +11,6 @@ router.get('/form', function(req, res) {
 });
 
 router.post('/', (req, res) => {
-  console.log("Hello i am console");
   res.redirect('/');
 })
 
